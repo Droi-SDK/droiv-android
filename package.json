@@ -1,0 +1,22 @@
+{
+  "name": "droiv-android",
+  "version": "0.0.4",
+  "description": "droiv-android release",
+  "bin": {
+    "create": "bin/create"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Droi-SDK/droiv-android.git"
+  },
+  "keywords": [
+    "android",
+    "droiv"
+  ],
+  "scripts": {
+  },
+  "author": "Droi",
+  "license": "Apache-2.0",
+  "dependencies": {
+  }
+}
