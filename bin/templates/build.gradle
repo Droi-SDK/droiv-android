@@ -2,18 +2,19 @@
 
 buildscript {
     repositories {
-        // maven { url "http://mvnrepo.alibaba-inc.com/mvn/repository" }
         mavenCentral()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.3.3'
     }
 }
 
 allprojects {
     repositories {
-        // maven { url "http://mvnrepo.alibaba-inc.com/mvn/repository" }
+        maven { url "https://dl.bintray.com/alibabaweex/maven" }
+        maven { url "https://github.com/DroiBaaS/DroiBaaS-SDK-Android/raw/master/" }
+        maven { url 'https://maven.google.com' }
         mavenCentral()
         jcenter()
     }

@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.example.myapp" version="1.0.0"
-        xmlns="http://www.w3.org/ns/widgets"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+<widget id="com.example.myapp" version="1.0.0">
+
     <name>Hello</name>
     <preference name="loglevel" value="DEBUG" />
     <preference name="launch_locally" value="true" />
