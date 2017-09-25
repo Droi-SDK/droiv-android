@@ -11,11 +11,13 @@ android {
         versionCode 1
         versionName "0.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [DROI_PUSH_APPID: 'xxxx']
         ndk {
             // abiFilters "x86"
             abiFilters "armeabi"
         }
     }
+
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
@@ -25,6 +27,7 @@ android {
             }
         }
     }
+
     signingConfigs {
         release {
             storeFile file("tools/debug.keystore")
@@ -39,6 +42,7 @@ android {
             keyPassword "android"
         }
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -50,6 +54,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
     sourceSets {
         main {
             java {
@@ -57,6 +62,7 @@ android {
             }
         }
     }
+
     lintOptions {
         abortOnError false
     }
@@ -64,6 +70,7 @@ android {
     packagingOptions {
         exclude 'LICENSE.txt'
     }
+
     testOptions {
         reportDir = "$project.buildDir/test/report"
     }
@@ -86,6 +93,7 @@ dependencies {
     /*source dependency*/
     // compile project(':weex_sdk')
     compile 'weex-project:weex_sdk:0.13.1@aar'
+    compile 'com.taobao.android:weex_inspector:0.12.1'
     compile project(':appframework')
     // compile project(':weexplugin')
     compile 'com.google.code.findbugs:jsr305:2.0.1'
@@ -97,8 +105,15 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:support-annotations:26.+'
-    compile 'com.taobao.android:weex_inspector:0.10.0.5'
     compile 'com.journeyapps:zxing-android-embedded:3.4.0'
+
+    compile 'com.droi.sdk:Core:+'
+    compile 'com.droi.sdk:push:+'
+    compile 'com.droi.sdk:analytics:+'
+    compile 'com.droi.sdk:selfupdate:+'
+    compile 'com.droi.sdk:feedback:+'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+
     // PLUGIN GRADLE EXTENSIONS START
     // PLUGIN GRADLE EXTENSIONS END
 }

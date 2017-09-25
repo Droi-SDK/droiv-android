@@ -28,9 +28,13 @@
         tools:overrideLibrary="com.taobao.android.dexposed">
 
         <uses-library android:name="android.test.runner" />
+
         <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="db6a973159cb0c2639ad02c617a786ae" />
+            android:name="com.droi.sdk.application_id"
+            android:value="kgotmbzhvdZZbRem9j0h9waEeAyhc0L7lQAAwKII" />
+        <meta-data
+            android:name="com.droi.sdk.channel_name"
+            android:value="DROI_CHANNEL1" />
 
         <activity
             android:name=".SplashActivity"

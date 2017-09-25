@@ -6,8 +6,11 @@ import com.alibaba.weex.commons.adapter.GlideImageAdapter;
 //import com.alibaba.weex.commons.adapter.ImageAdapter;
 import com.alibaba.weex.commons.util.AppConfig;
 import com.alibaba.weex.extend.module.WXEventModule;
-//import com.alibaba.weex.pluginmanager.PluginManager;
-//import com.facebook.drawee.backends.pipeline.*;
+import com.droi.sdk.analytics.DroiAnalytics;
+import com.droi.sdk.core.Core;
+import com.droi.sdk.feedback.DroiFeedback;
+import com.droi.sdk.push.DroiPush;
+import com.droi.sdk.selfupdate.DroiUpdate;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKEngine;
@@ -18,7 +21,18 @@ public class WXApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//    initDebugEnvironment(true, false, "DEBUG_SERVER_HOST");
+        Core.initialize(this);
+        // DroiAnalytics
+        DroiAnalytics.initialize(this);
+        DroiAnalytics.setCrashReport(true);
+        DroiAnalytics.enableActivityLifecycleCallbacks(this);
+
+        DroiFeedback.initialize(this,"SkEuE51vQazqgQdEOApsAzTynlhVfAKVJX-tvbCcYMkw2an-drip0-kmzFLWxDgT");
+        DroiUpdate.initialize(this,"RkE4DAa9XEe5OD4GV_MC0kgMQETFFsh1_snj0UHVlM_w2WgiZAT4Cxxl_7Ih772W");
+        // TODO: 2017/9/25 AppId ApplicationId
+        // DroiPush.initialize(this,"");
+
+        //initDebugEnvironment(true, false, "DEBUG_SERVER_HOST");
         WXSDKEngine.addCustomOptions("appName", "WXSample");
         WXSDKEngine.addCustomOptions("appGroup", "WXApp");
         WXSDKEngine.initialize(this,
