@@ -1,6 +1,6 @@
 {
   "name": "droiv-android",
-  "version": "0.0.5",
+  "version": "0.0.8",
   "description": "droiv-android release",
   "bin": {
     "create": "bin/create"
