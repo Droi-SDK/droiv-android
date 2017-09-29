@@ -210,7 +210,12 @@ public class WXPageActivity extends AbsWeexActivity implements
     // Put up our own UI for how to handle the decoded contents.
     private void handleDecodeInternally(String code) {
         if (!TextUtils.isEmpty(code)) {
-            Uri uri = Uri.parse(code);
+            Uri uri;
+            try {
+                uri = Uri.parse(code);
+            } catch (RuntimeException e) {
+                return;
+            }
             if (uri.getQueryParameterNames().contains("bundle")) {
                 WXEnvironment.sDynamicMode = uri.getBooleanQueryParameter("debug", false);
                 WXEnvironment.sDynamicUrl = uri.getQueryParameter("bundle");

@@ -38,27 +38,29 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                String url = AppConfig.getLaunchUrl();
-                if (!TextUtils.isEmpty(url)) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    String scheme = Uri.parse(url).getScheme();
-                    StringBuilder builder = new StringBuilder();
-                    if (TextUtils.equals("file", scheme)) {
-                        intent.putExtra("isLocal", true);
-                    } else if (!TextUtils.equals("http", scheme) &&
-                            !TextUtils.equals("https", scheme)) {
-                        builder.append("http:");
-                    }
-                    builder.append(url);
-
-                    Uri uri = Uri.parse(builder.toString());
-                    intent.setData(uri);
-                    // TODO: 2017/9/25 activity启动 
-                    intent.addCategory("com.taobao.android.intent.category.WEEX");
-                    intent.setPackage(getPackageName());
-                    startActivity(intent);
-                    finish();
-                }
+                startActivity(new Intent(SplashActivity.this, IndexActivity.class));
+                finish();
+//                String url = AppConfig.getLaunchUrl();
+//                if (!TextUtils.isEmpty(url)) {
+//                    Intent intent = new Intent(Intent.ACTION_VIEW);
+//                    String scheme = Uri.parse(url).getScheme();
+//                    StringBuilder builder = new StringBuilder();
+//                    if (TextUtils.equals("file", scheme)) {
+//                        intent.putExtra("isLocal", true);
+//                    } else if (!TextUtils.equals("http", scheme) &&
+//                            !TextUtils.equals("https", scheme)) {
+//                        builder.append("http:");
+//                    }
+//                    builder.append(url);
+//
+//                    Uri uri = Uri.parse(builder.toString());
+//                    intent.setData(uri);
+//                    // TODO: 2017/9/25 activity启动
+//                    intent.addCategory("com.taobao.android.intent.category.WEEX");
+//                    intent.setPackage(getPackageName());
+//                    startActivity(intent);
+//                    finish();
+//                }
             }
 
             @Override

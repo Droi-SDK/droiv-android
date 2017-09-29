@@ -203,7 +203,6 @@
  */
 package com.alibaba.weex.commons;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -215,6 +214,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -230,7 +230,7 @@ import com.taobao.weex.common.WXRenderStrategy;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbsWeexActivity extends Activity implements IWXRenderListener {
+public abstract class AbsWeexActivity extends AppCompatActivity implements IWXRenderListener {
     private static final String TAG = "AbsWeexActivity";
     protected BroadcastReceiver mBroadcastReceiver;
     protected ViewGroup mContainer;
