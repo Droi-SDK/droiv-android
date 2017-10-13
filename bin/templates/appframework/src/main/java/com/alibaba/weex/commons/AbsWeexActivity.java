@@ -231,6 +231,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbsWeexActivity extends AppCompatActivity implements IWXRenderListener {
+
     private static final String TAG = "AbsWeexActivity";
     protected BroadcastReceiver mBroadcastReceiver;
     protected ViewGroup mContainer;

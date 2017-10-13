@@ -26,7 +26,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     provided 'com.android.support:support-v4:26.+'
     provided 'com.android.support:appcompat-v7:26.+'
-    provided 'weex-project:weex_sdk:0.13.1@aar'
+    provided 'com.taobao.android:weex_sdk:0.16.0'
     provided 'com.alibaba:fastjson:1.1.46.android'
     provided 'com.google.code.findbugs:jsr305:2.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'

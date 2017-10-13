@@ -1,60 +1,98 @@
-package com.alibaba.weex.commons;
+package com.xiudian.weex.extend;
 
-import android.graphics.PixelFormat;
-import android.graphics.Rect;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.weex.commons.WXAnalyzerDelegate;
 import com.alibaba.weex.commons.util.AssertUtil;
-import com.alibaba.weex.commons.util.ScreenUtil;
-import com.taobao.weex.common.Constants;
 import com.taobao.weex.IWXRenderListener;
-import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.WXRenderStrategy;
-import com.taobao.weex.utils.WXUtils;
+import com.xiudian.weex.R;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by sospartan on 5/30/16.
+ * Created by chenpei on 2017/10/10.
  */
 
-public abstract class AbstractWeexActivity extends AppCompatActivity implements IWXRenderListener {
-    private static final String TAG = "AbstractWeexActivity";
+public class TabbarFragment extends Fragment implements IWXRenderListener {
 
-    private ViewGroup mContainer;
-    protected WXSDKInstance mInstance;
+    private static final String TAG = "ControllerViewFragment";
+
+    FrameLayout fragmentFl;
 
     protected WXAnalyzerDelegate mWxAnalyzerDelegate;
+    private ViewGroup mContainer;
+    protected WXSDKInstance mInstance;
+    private Context _mActivity;
+
+    private String sUri;
+    int index;
+
+    public static TabbarFragment newInstance(int index, String uri) {
+        Bundle args = new Bundle();
+        args.putInt("index", index);
+        args.putString("uri", uri);
+        TabbarFragment fragment = new TabbarFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public TabbarFragment() {
+
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        _mActivity = context;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        index = args.getInt("index");
+        sUri = args.getString("uri");
+        Log.i("chenpei", index + "uri:" + sUri);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         createWeexInstance();
         mInstance.onActivityCreate();
-        mWxAnalyzerDelegate = new WXAnalyzerDelegate(this);
+        mWxAnalyzerDelegate = new WXAnalyzerDelegate(_mActivity);
         mWxAnalyzerDelegate.onCreate();
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
+        View layout = inflater.inflate(R.layout.fragment_tabbar, container, false);
+        fragmentFl = layout.findViewById(R.id.fragment_fl);
+        setContainer(fragmentFl);
+        return layout;
     }
 
-    protected final void setContainer(ViewGroup container) {
-        mContainer = container;
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        if (sUri != null) {
+            renderPageByURL(sUri);
+        }
     }
 
-    protected final ViewGroup getContainer() {
-        return mContainer;
+    public void createWeexInstance() {
+        destroyWeexInstance();
+        mInstance = new WXSDKInstance(_mActivity);
+        mInstance.registerRenderListener(this);
     }
 
-    protected void destoryWeexInstance() {
+    public void destroyWeexInstance() {
         if (mInstance != null) {
             mInstance.registerRenderListener(null);
             mInstance.destroy();
@@ -62,74 +100,55 @@ public abstract class AbstractWeexActivity extends AppCompatActivity implements 
         }
     }
 
-    protected void createWeexInstance() {
-        destoryWeexInstance();
-        Rect outRect = new Rect();
-        getWindow().getDecorView().getWindowVisibleDisplayFrame(outRect);
-        mInstance = new WXSDKInstance(this);
-        mInstance.registerRenderListener(this);
+    public String getPageName() {
+        return TAG;
     }
 
-    protected void renderPage(String template, String source) {
+    public void renderPage(String template, String source) {
         renderPage(template, source, null);
     }
 
-    protected void renderPage(String template, String source, String jsonInitData) {
+    public void renderPage(String template, String source, String jsonInitData) {
         AssertUtil.throwIfNull(mContainer, new RuntimeException("Can't render page, container is null"));
         Map<String, Object> options = new HashMap<>();
         options.put(WXSDKInstance.BUNDLE_URL, source);
-        // Set options.bundleDigest
-        try {
-            String banner = WXUtils.getBundleBanner(template);
-            JSONObject jsonObj = JSONObject.parseObject(banner);
-            String digest = null;
-            if (jsonObj != null) {
-                digest = jsonObj.getString(Constants.CodeCache.BANNER_DIGEST);
-            }
-            if (digest != null) {
-                options.put(Constants.CodeCache.DIGEST, digest);
-            }
-        } catch (Throwable t) {
-        }
-        //Set options.codeCachePath
-        String path = WXEnvironment.getFilesDir(getApplicationContext());
-        path += File.separator;
-        path += Constants.CodeCache.SAVE_PATH;
-        path += File.separator;
-        options.put(Constants.CodeCache.PATH, path);
-
         mInstance.setTrackComponent(true);
         mInstance.render(
                 getPageName(),
                 template,
                 options,
                 jsonInitData,
-                ScreenUtil.getDisplayWidth(this),
-                ScreenUtil.getDisplayHeight(this),
                 WXRenderStrategy.APPEND_ASYNC);
     }
 
-    protected void renderPageByURL(String url) {
+    public void renderPageByURL(String url) {
         renderPageByURL(url, null);
     }
 
-    protected void renderPageByURL(String url, String jsonInitData) {
+    public void renderPageByURL(String url, String jsonInitData) {
         AssertUtil.throwIfNull(mContainer, new RuntimeException("Can't render page, container is null"));
         Map<String, Object> options = new HashMap<>();
         options.put(WXSDKInstance.BUNDLE_URL, url);
         mInstance.setTrackComponent(true);
         mInstance.renderByUrl(
-                getPageName(),
+                url.substring(url.length() - 16, url.length() - 11),
                 url,
                 options,
                 jsonInitData,
-                ScreenUtil.getDisplayWidth(this),
-                ScreenUtil.getDisplayHeight(this),
                 WXRenderStrategy.APPEND_ASYNC);
     }
 
-    protected String getPageName() {
-        return TAG;
+
+    public final void setContainer(ViewGroup container) {
+        mContainer = container;
+    }
+
+    public final ViewGroup getContainer() {
+        return mContainer;
+    }
+
+    public String getsUri() {
+        return sUri == null ? "" : sUri;
     }
 
     @Override
@@ -177,8 +196,8 @@ public abstract class AbstractWeexActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         if (mInstance != null) {
             mInstance.onActivityDestroy();
         }
@@ -188,10 +207,15 @@ public abstract class AbstractWeexActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void onViewCreated(WXSDKInstance wxsdkInstance, View view) {
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onViewCreated(WXSDKInstance instance, View view) {
         View wrappedView = null;
         if (mWxAnalyzerDelegate != null) {
-            wrappedView = mWxAnalyzerDelegate.onWeexViewCreated(wxsdkInstance, view);
+            wrappedView = mWxAnalyzerDelegate.onWeexViewCreated(instance, view);
         }
         if (wrappedView != null) {
             view = wrappedView;
@@ -202,31 +226,22 @@ public abstract class AbstractWeexActivity extends AppCompatActivity implements 
         }
     }
 
-
     @Override
-    public void onRefreshSuccess(WXSDKInstance wxsdkInstance, int i, int i1) {
-
+    public void onRenderSuccess(WXSDKInstance instance, int width, int height) {
     }
 
     @Override
-    @CallSuper
-    public void onRenderSuccess(WXSDKInstance instance, int width, int height) {
+    public void onRefreshSuccess(WXSDKInstance instance, int width, int height) {
         if (mWxAnalyzerDelegate != null) {
             mWxAnalyzerDelegate.onWeexRenderSuccess(instance);
         }
     }
 
     @Override
-    @CallSuper
     public void onException(WXSDKInstance instance, String errCode, String msg) {
         if (mWxAnalyzerDelegate != null) {
             mWxAnalyzerDelegate.onException(instance, errCode, msg);
         }
     }
 
-    @Override
-    @CallSuper
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        return (mWxAnalyzerDelegate != null && mWxAnalyzerDelegate.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
-    }
 }

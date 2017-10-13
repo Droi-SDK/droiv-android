@@ -92,7 +92,7 @@ dependencies {
     })
     /*source dependency*/
     // compile project(':weex_sdk')
-    compile 'weex-project:weex_sdk:0.13.1@aar'
+    compile 'com.taobao.android:weex_sdk:0.16.0'
     compile 'com.taobao.android:weex_inspector:0.12.1'
     compile project(':appframework')
     // compile project(':weexplugin')
@@ -106,9 +106,11 @@ dependencies {
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:support-annotations:26.+'
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
+    compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.2'
+    compile 'org.greenrobot:eventbus:3.0.0'
 
     compile 'com.droi.sdk:Core:+'
-    compile 'com.droi.sdk:push:+'
+    //compile 'com.droi.sdk:push:+'
     compile 'com.droi.sdk:analytics:+'
     compile 'com.droi.sdk:selfupdate:+'
     compile 'com.droi.sdk:feedback:+'

@@ -12,5 +12,6 @@
     </string>
     <string name="scan_qr_code">scan</string>
     <string name="page_refresh">refresh</string>
+    <string name="click_to_skip">"%1$d 跳过"</string>
 
 </resources>

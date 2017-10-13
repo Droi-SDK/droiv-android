@@ -23,7 +23,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.weex.commons.AbsWeexActivity;
 import com.alibaba.weex.commons.AbstractWeexActivity;
 import com.alibaba.weex.constants.Constants;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -71,7 +70,7 @@ public class IndexActivity extends AbstractWeexActivity {
         }
 
         if (TextUtils.equals(sCurrentIp, DEFAULT_IP)) {
-            renderPage(WXFileUtils.loadAsset("index.js", this), getIndexUrl());
+            renderPage(WXFileUtils.loadAsset("dist/index.js", this), getIndexUrl());
         } else {
             renderPageByURL(getIndexUrl());
         }
@@ -81,7 +80,7 @@ public class IndexActivity extends AbstractWeexActivity {
             public void onReceive(Context context, Intent intent) {
                 createWeexInstance();
                 if (TextUtils.equals(sCurrentIp, DEFAULT_IP)) {
-                    renderPage(WXFileUtils.loadAsset("index.js", getApplicationContext()), getIndexUrl());
+                    renderPage(WXFileUtils.loadAsset("dist/index.js", getApplicationContext()), getIndexUrl());
                 } else {
                     renderPageByURL(getIndexUrl());
                 }

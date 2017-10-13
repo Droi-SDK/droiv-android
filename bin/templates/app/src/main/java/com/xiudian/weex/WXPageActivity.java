@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.weex.commons.AbsWeexActivity;
+import com.alibaba.weex.commons.XiudianNavigator;
 import com.alibaba.weex.commons.util.CommonUtils;
 import com.alibaba.weex.commons.util.DevOptionHandler;
 import com.alibaba.weex.commons.util.ShakeDetector;
@@ -97,6 +98,7 @@ public class WXPageActivity extends AbsWeexActivity implements
             return;
         }
         loadUrl(getUrl(mUri));
+        WXSDKEngine.setActivityNavBarSetter(new XiudianNavigator(mInstance));
     }
 
     @Override
@@ -179,7 +181,6 @@ public class WXPageActivity extends AbsWeexActivity implements
                 IntentIntegrator integrator = new IntentIntegrator(this);
                 integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
                 integrator.setPrompt("Scan a barcode");
-                //integrator.setCameraId(0);  // Use a specific camera of the device
                 integrator.setBeepEnabled(true);
                 integrator.setOrientationLocked(false);
                 integrator.setBarcodeImageEnabled(true);
@@ -222,13 +223,11 @@ public class WXPageActivity extends AbsWeexActivity implements
                 String tip = WXEnvironment.sDynamicMode ? "Has switched to Dynamic Mode" : "Has switched to Normal Mode";
                 Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
                 finish();
-                return;
             } else if (uri.getQueryParameterNames().contains("_wx_devtool")) {
                 WXEnvironment.sRemoteDebugProxyUrl = uri.getQueryParameter("_wx_devtool");
                 WXEnvironment.sDebugServerConnectable = true;
                 WXSDKEngine.reload();
                 Toast.makeText(this, "devtool", Toast.LENGTH_SHORT).show();
-                return;
             } else if (code.contains("_wx_debug")) {
                 uri = Uri.parse(code);
                 String debug_url = uri.getQueryParameter("_wx_debug");
