@@ -1,4 +1,4 @@
-package com.xiudian.weex.extend;
+package com.xiudian.weex.im;
 
 import android.support.v4.app.Fragment;
 

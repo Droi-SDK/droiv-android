@@ -1,4 +1,4 @@
-package com.xiudian.weex.extend;
+package com.xiudian.weex.extend.component;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,7 @@ import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXComponentProp;
 import com.taobao.weex.ui.component.WXVContainer;
+import com.xiudian.weex.extend.ControllerView;
 
 import org.json.JSONArray;
 
@@ -18,11 +19,11 @@ import java.util.List;
  * Created by chenpei on 2017/10/11.
  */
 
-public class WXTabbar extends WXComponent {
+public class XDTabbar extends WXComponent {
     private String instanceId;
     private String tag;
 
-    public WXTabbar(WXSDKInstance instance, WXDomObject dom, WXVContainer parent) {
+    public XDTabbar(WXSDKInstance instance, WXDomObject dom, WXVContainer parent) {
         super(instance, dom, parent);
         this.instanceId = instance.getInstanceId();
     }

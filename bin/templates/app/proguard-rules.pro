@@ -31,3 +31,18 @@
 -keep class com.taobao.weex.module.**{*;}
 -keep public class * extends com.taobao.weex.common.WXModule{*;}
 -keep public class com.taobao.weex.WXDebugTool{*;}
+
+-dontwarn com.droi.sdk.**
+-dontwarn okio.**
+-dontwarn okhttp3.**
+-keep class com.droi.sdk.** { *; }
+-keep interface com.droi.sdk.** { *; }
+-keep class com.tyd.aidlservice.internal.** { *; }
+-keep interface com.tyd.aidlservice.internal.** { *; }
+-keep class * extends com.droi.sdk.core.DroiObject { @com.droi.sdk.core.DroiExpose *; @com.droi.sdk.core.DroiReference *;}
+-keep class * extends com.droi.sdk.core.DroiUser { @com.droi.sdk.core.DroiExpose *; @com.droi.sdk.core.DroiReference *;}
+#如果使用eclipse请再增加以下规则
+-keepattributes Signature
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod

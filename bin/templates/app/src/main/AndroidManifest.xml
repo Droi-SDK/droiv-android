@@ -41,13 +41,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+            android:theme="@style/FullscreenTheme" />
 
         <activity
             android:name=".SplashActivity"
@@ -63,16 +57,10 @@
         </activity>
 
         <activity
-            android:name=".extend.TabbarActivity"
+            android:name=".TabbarActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".IndexActivity"
@@ -89,14 +77,16 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-                <action android:name="com.alibaba.weex.protocol.openurl" />
+                <action android:name="com.xiudain.android.intent.action.WEEX" />
+                <action android:name="com.xiudian.weex.protocol.openurl.${XiuDian_Id}" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.xiudian.android.intent.category.XIUDIAN01" />
+                <category android:name="com.xiudian.android.intent.category.${XiuDian_Id}" />
 
                 <data android:scheme="http" />
                 <data android:scheme="https" />
                 <data android:scheme="file" />
+                <data android:scheme="${XiuDian_Id}" />
             </intent-filter>
         </activity>
 
@@ -104,6 +94,43 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
+
+        <activity
+            android:name="${applicationId}.WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="${applicationId}.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="${QQ_Id}" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.droi.sdk.socialize.DroSocializeiAssistActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
     </application>
 

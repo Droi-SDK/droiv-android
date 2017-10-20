@@ -1,10 +1,41 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.example.myapp" version="1.0.0">
+<widget
+    id="com.example.myapp"
+    version="1.0.0">
 
     <name>Hello</name>
-    <preference name="loglevel" value="DEBUG" />
-    <preference name="launch_locally" value="true" />
-    <preference name="launch_url" value="http://127.0.0.1:8080/dist/index.js"/>
-    <preference name="local_url" value="file://assets/index.js" />
+    <preference
+        name="xiudian_id"
+        value="xd1" />
+    <preference
+        name="loglevel"
+        value="DEBUG" />
+    <preference
+        name="launch_locally"
+        value="true" />
+    <preference
+        name="launch_url"
+        value="http://127.0.0.1:8080/dist/index.js" />
+    <preference
+        name="local_url"
+        value="file://assets/index.js" />
+    <preference
+        name="weixin_id"
+        value="weixin_id" />
+    <preference
+        name="weixin_key"
+        value="weixin_key" />
+    <preference
+        name="qq_id"
+        value="qq_id" />
+    <preference
+        name="qq_key"
+        value="qq_key" />
+    <preference
+        name="weibo_id"
+        value="weibo_id" />
+    <preference
+        name="weibo_key"
+        value="weibo_key" />
 
 </widget>

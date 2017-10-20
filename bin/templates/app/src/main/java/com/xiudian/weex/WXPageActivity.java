@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.weex.commons.AbsWeexActivity;
-import com.alibaba.weex.commons.XiudianNavigator;
 import com.alibaba.weex.commons.util.CommonUtils;
 import com.alibaba.weex.commons.util.DevOptionHandler;
 import com.alibaba.weex.commons.util.ShakeDetector;
@@ -58,6 +58,7 @@ public class WXPageActivity extends AbsWeexActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wxpage);
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
         mContainer = findViewById(R.id.container);
         mProgressBar = findViewById(R.id.progress);
         mTipView = findViewById(R.id.index_tip);
@@ -74,31 +75,28 @@ public class WXPageActivity extends AbsWeexActivity implements
 
         Uri uri = getIntent().getData();
         Bundle bundle = getIntent().getExtras();
-
         if (uri != null) {
             mUri = uri;
         }
-
         if (bundle != null) {
             String bundleUrl = bundle.getString(Constants.PARAM_BUNDLE_URL);
             if (!TextUtils.isEmpty(bundleUrl)) {
                 mUri = Uri.parse(bundleUrl);
             }
         }
-
         if (mUri == null) {
             Toast.makeText(this, "the uri is empty!", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-
         if (!WXSoInstallMgrSdk.isCPUSupport()) {
             mProgressBar.setVisibility(View.INVISIBLE);
             mTipView.setText(R.string.cpu_not_support_tip);
             return;
         }
+
         loadUrl(getUrl(mUri));
-        WXSDKEngine.setActivityNavBarSetter(new XiudianNavigator(mInstance));
+        //WXSDKEngine.setActivityNavBarSetter(new XDNavBarSetter(mInstance));
     }
 
     @Override
@@ -264,7 +262,6 @@ public class WXPageActivity extends AbsWeexActivity implements
                         IntentIntegrator integrator = new IntentIntegrator(WXPageActivity.this);
                         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
                         integrator.setPrompt("Scan a barcode");
-                        //integrator.setCameraId(0);  // Use a specific camera of the device
                         integrator.setBeepEnabled(true);
                         integrator.setOrientationLocked(false);
                         integrator.setBarcodeImageEnabled(true);
@@ -308,9 +305,7 @@ public class WXPageActivity extends AbsWeexActivity implements
         mDevOptionsDialog.show();
     }
 
-    public void addCustomDevOption(
-            String optionName,
-            DevOptionHandler optionHandler) {
+    public void addCustomDevOption(String optionName, DevOptionHandler optionHandler) {
         mCustomDevOptions.put(optionName, optionHandler);
     }
 }

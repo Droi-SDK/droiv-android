@@ -1,21 +1,26 @@
 package com.xiudian.weex;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.weex.commons.AbstractWeexActivity;
 import com.bumptech.glide.Glide;
 
 import static com.bumptech.glide.request.RequestOptions.centerCropTransform;
 
-import com.xiudian.weex.extend.TabbarActivity;
+import com.taobao.weex.WXSDKInstance;
+import com.taobao.weex.utils.WXFileUtils;
+import com.xiudian.weex.extend.ControllerView;
+
+import org.json.JSONArray;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -24,11 +29,14 @@ import java.text.DecimalFormat;
  * Created by chenpei on 2017/10/12.
  */
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends AbstractWeexActivity {
 
     private static final int sleepTime = 5000;
     TextView mCountDownTextView;
     private MyCountDownTimer mCountDownTimer;
+
+    private static final String DEFAULT_IP = "your_current_IP";
+    private static String sCurrentIp = DEFAULT_IP;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,29 +51,59 @@ public class SplashActivity extends Activity {
                 .into(image);
         mCountDownTimer = new MyCountDownTimer(sleepTime, 1000);
         mCountDownTimer.start();
-        mSkipLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCountDownTimer != null) {
-                    mCountDownTimer.cancel();
-                }
-                startIndexActivity();
-            }
-        });
+//        mSkipLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mCountDownTimer != null) {
+//                    mCountDownTimer.cancel();
+//                }
+//                startIndexActivity();
+//            }
+//        });
+        FrameLayout noShow = findViewById(R.id.noshow);
+        setContainer(noShow);
+        renderPage(WXFileUtils.loadAsset("dist/tabbar.js", this), getIndexUrl());
+    }
+
+    private static String getIndexUrl() {
+        return "http://" + sCurrentIp + ":12580/examples/build/index.js";
     }
 
     @Override
-    protected void onStart() {
+    @CallSuper
+    public void onRenderSuccess(WXSDKInstance instance, int width, int height) {
+        super.onRenderSuccess(instance, width, height);
+        //isRenderSuccess = true;
+        ControllerView vg;
+        ViewGroup container = getContainer();
+        vg = container.findViewWithTag(ControllerView.TAG);
+        //initView(vg.getInfo());
+        jsonArray = vg.getInfo();
+        startIndexActivity();
+    }
+
+    JSONArray jsonArray;
+
+    @Override
+    @CallSuper
+    public void onException(WXSDKInstance instance, String errCode, String msg) {
+        super.onException(instance, errCode, msg);
+    }
+
+    @Override
+    public void onStart() {
         super.onStart();
     }
 
     void startIndexActivity() {
-        startActivity(new Intent(SplashActivity.this, IndexActivity.class));
+        Intent intent = new Intent(SplashActivity.this, IndexActivity.class);
+        intent.putExtra("tabbar",jsonArray.toString());
+        startActivity(intent);
         finish();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         if (mCountDownTimer != null) {
             mCountDownTimer.cancel();
         }

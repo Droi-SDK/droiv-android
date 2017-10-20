@@ -29,4 +29,30 @@ public class AppConfig {
         parser.parse(context);
         sPreferences = parser.getPreferences();
     }
+
+    public static String getWeixinId() {
+        return sPreferences.getString("weixin_id", "");
+    }
+
+    public static String getWeixinKey() {
+        return sPreferences.getString("weixin_key", "");
+    }
+
+    public static String getQQId() {
+        return sPreferences.getString("qq_id", "");
+    }
+
+    public static String getQQKey() {
+        return sPreferences.getString("qq_key", "");
+    }
+
+    public static String getWeixboId() {
+        return sPreferences.getString("weibo_id", "");
+    }
+
+    public static String getWeiboKey() {
+        return sPreferences.getString("weibo_key", "");
+    }
+
+    public static String getXiudianId() {return sPreferences.getString("xiudian_id","");}
 }

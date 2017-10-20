@@ -1,4 +1,4 @@
-package com.alibaba.weex.commons;
+package com.xiudian.weex.extend;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.weex.commons.util.AppConfig;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.appfram.navigator.IActivityNavBarSetter;
 import com.taobao.weex.common.Constants;
@@ -16,16 +17,16 @@ import com.taobao.weex.utils.WXLogUtils;
  * Created by chenpei on 2017/10/13.
  */
 
-public class XiudianNavigator implements IActivityNavBarSetter {
+public class XDNavBarSetter implements IActivityNavBarSetter {
 
     private final static String INSTANCE_ID = "instanceId";
-    private final static String TAG = "XiudianNavigator";
-    private final static String XIUDIAN = "com.xiudian.android.intent.category.XIUDIAN01";
+    private final static String TAG = "XDNavBarSetter";
+    public final static String XIUDIAN = "com.xiudian.android.intent.category.";
     private final static String URL = "url";
 
     public WXSDKInstance mWXSDKInstance;
 
-    public XiudianNavigator(WXSDKInstance wxsdkInstance) {
+    public XDNavBarSetter(WXSDKInstance wxsdkInstance) {
         if (mWXSDKInstance == null) {
             mWXSDKInstance = wxsdkInstance;
         }
@@ -44,7 +45,8 @@ public class XiudianNavigator implements IActivityNavBarSetter {
                     builder.scheme(Constants.Scheme.HTTP);
                 }
                 Intent intent = new Intent(Intent.ACTION_VIEW, builder.build());
-                intent.addCategory(XIUDIAN);
+                String XDCategory = XIUDIAN + AppConfig.getXiudianId();
+                intent.addCategory(XDCategory);
                 intent.putExtra(INSTANCE_ID, mWXSDKInstance.getInstanceId());
                 mWXSDKInstance.getContext().startActivity(intent);
             }
