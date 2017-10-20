@@ -16,7 +16,7 @@ import android.util.Base64;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.xiudian.weex.im.ImFragment;
-import com.xiudian.weex.extend.TabbarFragment;
+import com.xiudian.weex.extend.view.TabbarFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;

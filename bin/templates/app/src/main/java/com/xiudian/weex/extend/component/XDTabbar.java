@@ -9,7 +9,7 @@ import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXComponentProp;
 import com.taobao.weex.ui.component.WXVContainer;
-import com.xiudian.weex.extend.ControllerView;
+import com.xiudian.weex.extend.view.TabbarControllerView;
 
 import org.json.JSONArray;
 
@@ -30,7 +30,7 @@ public class XDTabbar extends WXComponent {
 
     @Override
     protected View initComponentHostView(@NonNull Context context) {
-        ControllerView view = new ControllerView(context);
+        TabbarControllerView view = new TabbarControllerView(context);
         view.setHostId(instanceId);
         return view;
     }
@@ -38,8 +38,8 @@ public class XDTabbar extends WXComponent {
     @WXComponentProp(name = "info")
     public void setInfo(List<Object> info) {
         JSONArray jsonArray = new JSONArray(info);
-        ControllerView cv = (ControllerView) getRealView();
-        cv.setTag(ControllerView.TAG);
+        TabbarControllerView cv = (TabbarControllerView) getRealView();
+        cv.setTag(TabbarControllerView.TAG);
         cv.setInfo(jsonArray);
     }
 }

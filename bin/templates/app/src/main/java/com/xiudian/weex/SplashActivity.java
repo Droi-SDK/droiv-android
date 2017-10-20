@@ -18,7 +18,7 @@ import static com.bumptech.glide.request.RequestOptions.centerCropTransform;
 
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.utils.WXFileUtils;
-import com.xiudian.weex.extend.ControllerView;
+import com.xiudian.weex.extend.view.TabbarControllerView;
 
 import org.json.JSONArray;
 
@@ -74,9 +74,9 @@ public class SplashActivity extends AbstractWeexActivity {
     public void onRenderSuccess(WXSDKInstance instance, int width, int height) {
         super.onRenderSuccess(instance, width, height);
         //isRenderSuccess = true;
-        ControllerView vg;
+        TabbarControllerView vg;
         ViewGroup container = getContainer();
-        vg = container.findViewWithTag(ControllerView.TAG);
+        vg = container.findViewWithTag(TabbarControllerView.TAG);
         //initView(vg.getInfo());
         jsonArray = vg.getInfo();
         startIndexActivity();

@@ -1,4 +1,4 @@
-package com.xiudian.weex.extend;
+package com.xiudian.weex.extend.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -16,25 +16,25 @@ import org.json.JSONArray;
  * Created by lychee on 17-4-6.
  */
 
-public class ControllerView extends FrameLayout {
+public class TabbarControllerView extends FrameLayout {
     private JSONArray info;
     private String hostId;
     public final static String TAG = "lychee";//前端页面需要定义的tag
 
-    public ControllerView(@NonNull Context context) {
+    public TabbarControllerView(@NonNull Context context) {
         super(context);
     }
 
-    public ControllerView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public TabbarControllerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ControllerView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public TabbarControllerView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ControllerView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
+    public TabbarControllerView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
