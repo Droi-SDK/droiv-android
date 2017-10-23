@@ -11,10 +11,6 @@ import com.taobao.weex.common.WXModule;
 import com.xiudian.share.ShareAction;
 import com.xiudian.weex.R;
 
-/**
- * Created by chenpei on 2017/10/20.
- */
-
 public class XDShareModule extends WXModule {
     @JSMethod(uiThread = true)
     public void share(JSONObject options) {
@@ -25,7 +21,6 @@ public class XDShareModule extends WXModule {
                 .addTitle("网页分享标题")
                 .addSummary("网页分享描述信息")
                 .addThumb(new MediaImage(mWXSDKInstance.getContext(), R.drawable.socialize_qq));
-
         ShareAction shareAction = new ShareAction((Activity) mWXSDKInstance.getContext(), droiShareTask);
         shareAction.open();
     }

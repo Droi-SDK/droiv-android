@@ -1,14 +1,13 @@
 package com.xiudian.weex.extend.component;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.bumptech.glide.Glide;
 import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.adapter.URIAdapter;
 import com.taobao.weex.common.Constants;
 import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponent;
@@ -17,14 +16,13 @@ import com.taobao.weex.ui.component.WXVContainer;
 
 import cn.jzvd.JZVideoPlayerStandard;
 
-/**
- * Created by chenpei on 2017/10/19.
- */
-
 public class XDVideo extends WXComponent<FrameLayout> {
 
-    private JZVideoPlayerStandard mWrapper;
-    private boolean mAutoPlay;
+    private JZVideoPlayerStandard mView;
+    private int mType;
+    private String mUrl = "";
+    private String mThumbUrl = "";
+    private String mTitle = "";
 
     public XDVideo(WXSDKInstance instance, WXDomObject dom, WXVContainer parent) {
         super(instance, dom, parent);
@@ -33,7 +31,7 @@ public class XDVideo extends WXComponent<FrameLayout> {
     @Override
     protected FrameLayout initComponentHostView(@NonNull Context context) {
         JZVideoPlayerStandard video = new JZVideoPlayerStandard(context);
-        mWrapper =video;
+        mView = video;
         return video;
     }
 
@@ -42,21 +40,46 @@ public class XDVideo extends WXComponent<FrameLayout> {
         if (TextUtils.isEmpty(src) || getHostView() == null) {
             return;
         }
-
         if (!TextUtils.isEmpty(src)) {
-            WXSDKInstance instance = getInstance();
-            //instance.rewriteUri(Uri.parse(src), URIAdapter.VIDEO)
-            mWrapper.setUp(src, JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "");
-            //mVideo.getProgressBar().setVisibility(View.VISIBLE);
+            mUrl = src;
+            mView.setUp(mUrl, JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, mTitle);
         }
     }
 
-    @WXComponentProp(name = Constants.Name.AUTO_PLAY)
-    public void setAutoPlay(boolean autoPlay) {
-        mAutoPlay = autoPlay;
-        if(autoPlay){
-            //mWrapper.createIfNotExist();
-            mWrapper.startVideo();
+    @WXComponentProp(name = "thumbUrl")
+    public void setThumb(String thumbUrl) {
+        if (TextUtils.isEmpty(thumbUrl) || getHostView() == null) {
+            return;
+        }
+        if (!TextUtils.isEmpty(thumbUrl)) {
+            mThumbUrl = thumbUrl;
+            WXSDKInstance instance = getInstance();
+            Glide.with(instance.getContext())
+                    .load(mThumbUrl)
+                    .into(mView.thumbImageView);
+        }
+    }
+
+    @WXComponentProp(name = "title")
+    public void setTitle(String title) {
+        if (TextUtils.isEmpty(title) || getHostView() == null) {
+            return;
+        }
+        if (!TextUtils.isEmpty(title)) {
+            mTitle = title;
+            mView.setUp(mUrl, JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, mTitle);
+        }
+    }
+
+    @WXComponentProp(name = "type")
+    public void setType(int type) {
+        mType = type;
+        if (mType == 1) {
+            mView.currentTimeTextView.setVisibility(View.GONE);
+            mView.progressBar.setVisibility(View.GONE);
+            mView.totalTimeTextView.setVisibility(View.GONE);
+            mView.clarity.setVisibility(View.GONE);
+            mView.fullscreenButton.setVisibility(View.GONE);
         }
     }
 }

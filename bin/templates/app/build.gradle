@@ -117,7 +117,7 @@ dependencies {
     compile 'com.droi.sdk:analytics:+'
     compile 'com.droi.sdk:selfupdate:+'
     compile 'com.droi.sdk:feedback:+'
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
     //compile 'com.squareup.okhttp3:okhttp-ws:3.4.2'
 
     // share&pay
